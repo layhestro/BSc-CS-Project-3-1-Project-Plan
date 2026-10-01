@@ -1,0 +1,63 @@
+
+\section{Excellence}
+
+\subsection{Motivation, context, problem statement}      % 1 page max
+\secinfo{Louis Nathan}{Name}
+Fully Homomorphic Encryption (FHE) enables arbitrary computations over encrypted data without requiring access to decryption keys. Despite its significant potential for privacy preserving cloud computing, and secure multi-party computation, its mainstream adoption is hindered by severe computational overhead, and architectural complexity.
+
+To address this software-hardware bottleneck, Google introduced HEIR (Homomorphic Encryption Intermediate Representation) \cite{ali2025heir}, an open-source compiler toolchain constructed within the MLIR (Multi-Level intermediate Representation) ecosystem. HEIR decouples high-level privacy-preserving applications from platform-specific hardware. Developers can define cryptographic operations at a higher abstraction layer and rely on HEIR to compile into various backends automatically.
+
+This research project proposes a structured evaluation of the HEIR compiler framework. By implementing two computationally challenging control flow primitives-sorting lists of encrypted integers and shuffling list of encrypted integers. This project provides a benchmarking suite for the efficiency of the FHE compiler. The evaluation will test the compiler across input scale, bit depth and multiplicative depth, and evaluate the cross-platform execution performance on CPUs, GPUs, and TPUs, deriving computational cost for cloud deployment environments.
+
+\subsection{Scientific and technological objectives}
+\secinfo{Louis Nathan}{Name} % 2 pages max
+This scientific objectives of this research focuses on expanding the theoretical and empirical understanding of homomorphic circuits, and execution paradigms under homomorphic constraints.
+
+\begin{table}[ht]
+\begin{tabular}{|l|l|}
+\hline
+Objective O1: Characterize Parameter Scalability of Non-Linear Homomorphic Primitives & \\ \hline
+S.M.A.R.T. Justification& Determine security and efficiency by quantifying the boundaries input length for encrypted sorting and shuffling before bootstrapping costs halt computation \\ \hline
+KPIs& Identifying the maximum input length N for an encrypted 32-bit integer\\ \hline
+\end{tabular}
+\end{table}
+
+
+
+
+\subsection{Requirements}   
+\secinfo{Louis Nathan}{Name} % 2 pages max
+
+
+\subsection{Concept and approach} 
+\secinfo{Louis Nathan}{Name}% 3 pages max
+
+in the work so far i have found a couple of things that might be interesting to test for. namely where MPC and FHE meet in viability. this coupled with maybe a throttle test on a network to simulate latency would be interesting. 
+
+
+\subsection{Work so far}                                 % 2 pages max
+\secinfo{Joris}{Name}
+
+Our implementation relies on the compiler infrastructure established in \cite{ali2025heir}. By providing an abstraction layer that decouples application logic from a specific cryptographic backend, their work supplies the tool chain we use to compile our sorting and shuffling algorithms.
+
+To anticipate the hardware bottlenecks we are going to face in this project we look at the benchmarking already done in \cite{bian2023heir}. This paper exposes a fundamental limitation inherent to FHE. Bit wise operations will cause memory usage to scale exponentially. Our work will rely mostly on bitwise operation. So from this we are estimating that we will hit a memory wall long before we hit a computational wall.
+
+The problem is if you use MPC too much the memory wall will come down but the communication wall will rise. Every non-linear MPC calculation brings communication and this will throttle the workings, as shuffling and sorting are non-linear algorithms. In the paper Beyond Latency: A System-Level Characterization of MPC and FHE for PPML \cite{huang2026beyond} the specific point where FHE and MPC meet in efficiency is found. This paper primarily focuses on PPML however which is dominated by linear matrix multiplications. Hence their findings will not directly map to ours as we will have mostly bit wise operations. This paper does give us a very rigorous framework to work from if we adapt it to our needs.
+
+Finally we look at the paper "A Pragmatic Comparison of Cryptographic Computation Technologies for Machine Learning" \cite{taubert2026pragmatic}. This establishes the pragmatic flaws in a real life system such as latency and how it effects the viability of the system. Which means the viability will be heavily dependent on close proximity networks and will be severely penalized over long distance networking.
+
+
+
+
+
+
+\subsection{Envisioned additional prototypes}            % 2 pages max
+
+
+\subsection{Ambition}                                    % 1/2 page max
+\secinfo{Joris}{Name}
+
+
+\subsection{Related work}                                % 2 pages max
+\secinfo{Joris}{Name}
+Why is it better than existing solutions?

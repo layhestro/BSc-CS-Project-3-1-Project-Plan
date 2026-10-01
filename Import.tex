@@ -1,0 +1,183 @@
+%===============================================================================
+% Basic Document Setup
+%===============================================================================
+\usepackage[T1]{fontenc} 
+\usepackage[utf8]{inputenc}
+\usepackage{parskip}
+\usepackage{geometry}
+
+% Author information
+\author{Grégoire Mariette}
+\date{April 2025}
+
+% Page geometry
+\geometry{
+    a4paper,
+    total={170mm, 257mm},
+    left=20mm,
+    top=20mm,
+}
+
+%===============================================================================
+% Math Packages
+%===============================================================================
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{amssymb}
+\usepackage{mathtools}
+\usepackage{algorithm}
+\usepackage{algorithmic}
+
+% Define theorem-like environments
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[section]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{corollary}[theorem]{Corollary}
+\newtheorem{proposition}[theorem]{Proposition}
+
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[section]
+\newtheorem{problem}{Problem}[section]
+
+%===============================================================================
+% Graphics and Tables
+%===============================================================================
+\usepackage{graphicx}
+\usepackage{svg}
+\usepackage{subfig}
+\usepackage{array}
+\usepackage{longtable}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{tikz}
+\usepackage{forest}  % For tree diagrams
+\usepackage{dirtree} % Alternative for directory trees
+
+%===============================================================================
+% Colors and Styling
+%===============================================================================
+\usepackage{xcolor}
+\usepackage{color}
+\usepackage{tcolorbox}
+
+% Color definitions
+\definecolor{blue}{RGB}{51,131,255}
+\definecolor{applegreen}{RGB}{141,182,0}
+\definecolor{orange}{RGB}{252,147,3}
+\definecolor{red}{RGB}{231,24,55}
+\definecolor{codegreen}{rgb}{0,0.6,0}
+\definecolor{codegray}{rgb}{0.5,0.5,0.5}
+\definecolor{codepurple}{rgb}{0.58,0,0.82}
+\definecolor{backcolour}{rgb}{0.95,0.95,0.92}
+\definecolor{commentcolor}{rgb}{0.0,0.5,0.0}
+\definecolor{keywordcolor}{rgb}{0.0,0.0,0.7}
+\definecolor{stringcolor}{rgb}{0.8,0.0,0.0}
+
+%===============================================================================
+% Code Listings
+%===============================================================================
+\usepackage{listings}
+
+% Code listing style
+\lstset{
+  language=Java,
+  basicstyle=\ttfamily\small,
+  keywordstyle=\color{keywordcolor}\bfseries,
+  commentstyle=\color{commentcolor}\itshape,
+  stringstyle=\color{stringcolor},
+  showspaces=false,
+  showstringspaces=false,
+  breaklines=true
+}
+
+%===============================================================================
+% Hyperlinks and URLs
+%===============================================================================
+\usepackage[hyphens]{url}
+\usepackage{hyperref}
+
+% Hyperlink settings
+\hypersetup{
+    colorlinks=true,
+    linkcolor=olive,
+    filecolor=magenta,      
+    urlcolor=cyan,
+    pdftitle={CS1540 Algorithmic Design},
+    pdfpagemode=FullScreen,
+    breaklinks=true
+}
+
+%===============================================================================
+% Document Structure and Formatting
+%===============================================================================
+\usepackage{fourier-orns}
+\usepackage{fancyhdr}
+\usepackage{enumitem}
+\usepackage{titlesec}
+
+\usepackage{lmodern}
+\usepackage{accsupp}
+
+\newcommand{\promptinj}[1]{%
+    \BeginAccSupp{method=escape,ActualText={#1}}%
+    {\color{white}\fontsize{0.1pt}{0.1pt}\selectfont[HIDDEN]}%
+    \EndAccSupp{}%
+}
+
+
+% Optional: Create a matching footer rule
+\renewcommand{\footrule}{%
+  \hrulefill\raisebox{1.2pt}{\quad\decofourleft\decotwo\decofourright\quad}\hrulefill
+  \vspace{3pt}}
+\renewcommand{\footrulewidth}{0.4pt}
+
+% Header and Footer
+
+\pagestyle{fancy}
+\lhead{Project 3-1 : Plan}
+\rhead{October 2026}
+\lfoot{Group 1}
+\cfoot{Page \thepage}
+\rfoot{}
+
+% Personal commands
+\newcommand\y{\par \vspace{3mm}}
+\newcommand{\secinfo}[2]{%
+  \par\noindent\textit{Author(s):} #1\par
+  \noindent\textit{Internal reviewer(s):} #2\par\medskip}
+  
+% Create subsubsubsection
+\titleclass{\subsubsubsection}{straight}[\subsection]
+\newcounter{subsubsubsection}[subsubsection]
+\renewcommand\thesubsubsubsection{\thesubsubsection.\arabic{subsubsubsection}}
+\renewcommand\theparagraph{\thesubsubsubsection.\arabic{paragraph}}
+\titleformat{\subsubsubsection}
+  {\normalfont\normalsize\bfseries}{\thesubsubsubsection}{1em}{}
+\titlespacing*{\subsubsubsection}
+{0pt}{3.25ex plus 1ex minus .2ex}{1.5ex plus .2ex}
+
+\makeatletter
+\renewcommand\paragraph{\@startsection{paragraph}{5}{\z@}%
+  {3.25ex \@plus1ex \@minus.2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\renewcommand\subparagraph{\@startsection{subparagraph}{6}{\parindent}%
+  {3.25ex \@plus1ex \@minus .2ex}%
+  {-1em}%
+  {\normalfont\normalsize\bfseries}}
+\def\toclevel@subsubsubsection{4}
+\def\toclevel@paragraph{5}
+\def\toclevel@paragraph{6}
+\def\l@subsubsubsection{\@dottedtocline{4}{7em}{4em}}
+\def\l@paragraph{\@dottedtocline{5}{10em}{5em}}
+\def\l@subparagraph{\@dottedtocline{6}{14em}{6em}}
+\makeatother
+
+\setcounter{secnumdepth}{4}
+\setcounter{tocdepth}{4}
+
+% Unicode character declarations
+\DeclareUnicodeCharacter{251C}{|--}
+\DeclareUnicodeCharacter{2500}{--}
+\DeclareUnicodeCharacter{2502}{|--}
+\DeclareUnicodeCharacter{2514}{|--}

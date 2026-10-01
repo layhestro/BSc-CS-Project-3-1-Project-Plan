@@ -1,0 +1,107 @@
+\section{Key Computational Complexity Concepts}
+
+Throughout our discussion of the Castle Kingdom Road problem, we encountered several fundamental concepts in computational complexity theory and optimization. This section summarizes these concepts and their relationships.
+
+\subsection{Computational Complexity Classes}
+
+\subsubsection{P (Polynomial Time)}
+P is the class of decision problems that can be \textit{solved} in polynomial time by a deterministic algorithm. Formally, a problem is in P if there exists an algorithm that can solve any instance of the problem in time $O(n^k)$ for some constant $k$, where $n$ is the input size.
+
+\textbf{Example:} Determining if a number is in a sorted array (binary search: $O(\log n)$), finding the shortest path in a graph (Dijkstra's algorithm: $O(|E| + |V| \log |V|)$).
+
+\subsubsection{NP (Non-deterministic Polynomial Time)}
+NP is the class of decision problems where a "yes" answer can be \textit{verified} in polynomial time given a certificate. A problem is in NP if:
+\begin{itemize}
+    \item There exists a polynomial-size certificate for each "yes" instance
+    \item There exists a polynomial-time verification algorithm that can check the validity of the certificate
+\end{itemize}
+
+\textbf{Example:} In the Vertex Cover problem, the certificate is the subset of vertices, and verification involves checking if each edge has at least one endpoint in this subset.
+
+\textbf{Important:} Every problem in P is also in NP (if you can solve it efficiently, you can verify a solution efficiently).
+
+\subsubsection{NP-Hard}
+A problem is NP-hard if every problem in NP can be reduced to it in polynomial time. NP-hard problems are at least as difficult as the hardest problems in NP. NP-hard problems may not necessarily be in NP themselves.
+
+\textbf{Example:} The Halting Problem (determining if a program terminates) is NP-hard but not in NP.
+
+\subsubsection{NP-Complete}
+A problem is NP-complete if it is both in NP and NP-hard. These represent the "hardest" problems in NP.
+
+\textbf{Example:} Vertex Cover, Boolean Satisfiability (SAT), Traveling Salesperson Problem (TSP).
+
+\subsection{Reductions}
+A reduction is a transformation that converts one problem to another while preserving the answer. If problem A reduces to problem B, then B is at least as hard as A.
+
+\textbf{Polynomial-time reduction:} A transformation from problem A to problem B that:
+\begin{itemize}
+    \item Can be computed in polynomial time
+    \item Ensures that an instance of A is a "yes" instance if and only if the corresponding instance of B is a "yes" instance
+\end{itemize}
+
+\textbf{Using reductions:} To prove a problem is NP-hard, we reduce a known NP-complete problem to it. This shows that our problem is at least as hard as an NP-complete problem.
+
+\textbf{Example:} We reduced Vertex Cover to our Castle Kingdom Road problem by using the same graph, setting all costs to 1, and setting the budget to $k$.
+
+\subsection{Integer Linear Programming (ILP)}
+ILP is a mathematical optimization technique where:
+\begin{itemize}
+    \item Decision variables must take integer values (often binary 0 or 1)
+    \item The objective function is linear
+    \item Constraints are linear equalities or inequalities
+\end{itemize}
+
+\textbf{Standard form:}
+\begin{align}
+\text{Minimize/Maximize } & \sum_{j=1}^{n} c_j x_j \\
+\text{Subject to: } & \sum_{j=1}^{n} a_{ij} x_j \leq b_i \text{ for } i = 1, 2, \ldots, m \\
+& x_j \in \mathbb{Z} \text{ (or } x_j \in \{0,1\}\text{) for } j = 1, 2, \ldots, n
+\end{align}
+
+\textbf{Example:} For the Castle Kingdom Road problem:
+\begin{itemize}
+    \item Variables $x_i \in \{0,1\}$ indicate whether to build a castle at town $i$
+    \item Objective: Minimize $\sum_{i \in V} c_i x_i$
+    \item Constraints: $x_i + x_j \geq 1$ for each road $(i,j) \in E$
+\end{itemize}
+
+\subsection{Relaxation}
+Relaxation involves removing some constraints to create an easier problem. In the context of ILP:
+
+\textbf{LP relaxation:} Replace integer constraints ($x_j \in \{0,1\}$ or $x_j \in \mathbb{Z}$) with continuous constraints ($0 \leq x_j \leq 1$ or $x_j \in \mathbb{R}$).
+
+\textbf{Key properties:}
+\begin{itemize}
+    \item LP relaxations can be solved in polynomial time
+    \item The optimal value of the LP relaxation provides a bound on the optimal value of the original ILP
+    \item For minimization problems: $OPT_{LP} \leq OPT_{ILP}$
+\end{itemize}
+
+\subsection{Approximation Algorithms}
+An approximation algorithm finds a solution that may not be optimal but is guaranteed to be within some factor of the optimal solution.
+
+\textbf{Approximation ratio:} For a minimization problem, if $ALG$ is the cost of the solution produced by the algorithm and $OPT$ is the cost of the optimal solution, the approximation ratio $\alpha$ means $ALG \leq \alpha \cdot OPT$.
+
+\textbf{Common technique:} Solve the LP relaxation of an ILP and round the fractional solution to get an integer solution.
+
+\textbf{Example:} For the Castle Kingdom Road problem:
+\begin{itemize}
+    \item Solve the LP relaxation
+    \item Build castles where $x_i \geq 1/2$ in the optimal LP solution
+    \item This gives a 2-approximation because:
+    \begin{itemize}
+        \item At least one variable in each constraint must be $\geq 1/2$ (feasibility)
+        \item Rounding costs at most twice the LP solution cost (approximation ratio)
+    \end{itemize}
+\end{itemize}
+
+\subsection{Relationships and Significance}
+These concepts are deeply interconnected in the theory of computation and optimization:
+\begin{itemize}
+    \item P vs. NP is one of the most important open problems in computer science
+    \item NP-completeness explains why many problems seem to require exponential time
+    \item ILP provides a powerful framework for expressing many optimization problems
+    \item Relaxation and approximation techniques allow us to find good solutions to hard problems efficiently
+\end{itemize}
+
+Understanding these concepts helps us analyze problem difficulty, develop efficient algorithms, and make principled trade-offs between optimality and computational efficiency.

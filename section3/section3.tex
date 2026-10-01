@@ -1,0 +1,112 @@
+\section{Implementation}
+
+
+\subsection{Gantt chart}
+
+
+
+\subsection{Work plan}                                   % 3 pages max
+
+
+
+\subsection{Milestones} % 1/2 page max
+\secinfo{Jimena}{tbd}
+\begin{enumerate}
+    \item Set up and testing:  Set up the Google HEIR and MLIR ecosystem, create testing environments and toolchain access to the hardware backend we want to test (CPU, GPU, TPU). Implement sanity checks to confirm the pipeline works from code to hardware representation. 
+    \item Implementation of the Algorithm and Correctness verification: Implement the integer sorting algorithm using HEIR-supported programs, the integer shuffling algorithm and verify it correctness. 
+    \item Boundary and scalability tests: Test the compiler by varying input parameters, stablish the maximum and minimum boundaries supported before encountering memory limitation or algorithmic bottlenecks. 
+    \item Hardware Execution and profiling: Deploy sorting and shuffling workloads across the three tested hardware (CPU, GPU and TPU), record the runtime execution latency, memory footprint, throughput, and compilation overhead for each hardware tested and compare the results. 
+    \item Cost and operation analysis:  Analyze the cost with the hardware execution times and memory consumption to cloud provider billing models, calculating the real-world operational cost per sorting and shuffling workload across each hardware. Identify the most economical hardware configuration for different input sizes. 
+    \item Document, contrast and analyze the results. 
+\end{enumerate}
+
+
+
+
+
+
+\subsection{Deliverables}                                % 1/2 page max
+
+
+
+
+\subsection{Risk management}                            % 3 pages max
+\secinfo{Abdul Moiz Akbar}{}
+\medskip
+This project relies on a research-grade compiler, computationally expensive
+cryptographic workloads, and hardware we do not fully control. Risks are rated
+by probability of occurrence and impact on the project (L = low, M = medium,
+H = high). Where a risk concerns the limits of HEIR itself, reaching that limit is recorded as an experimental result rather than a project failure.
+
+
+\subsubsection*{Risks from technology and tooling}
+  
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{
+  >{\raggedright\arraybackslash}p{0.05\textwidth}
+  >{\raggedright\arraybackslash}p{0.34\textwidth}
+  >{\centering\arraybackslash}p{0.055\textwidth}
+  >{\centering\arraybackslash}p{0.075\textwidth}
+  >{\raggedright\arraybackslash}p{0.345\textwidth}}
+\caption{Risks from technology and tooling.}\label{tab:risk-tech}\\
+\toprule
+\textbf{ID} & \textbf{Risk} & \textbf{Prob.} & \textbf{Impact} & \textbf{Mitigation plan}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Risk} & \textbf{Prob.} & \textbf{Impact} & \textbf{Mitigation plan}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+ 
+RK1 &
+HEIR is research software: it changes often, and there is limited documentaion \cite{Goo26, Kun26}. &
+H & M &
+Pin one HEIR release for the whole project and run it in a shared Docker image so all members work in an identical environment.
+\cite{Goo26}.
+\\ \midrule
+ 
+RK2 &
+Only data-oblivious algorithms can be compiled, encrypted comparisons are
+expensive, and HEIR has no sorting or shuffling examples to build on
+\cite{ali2025heir, Goo26}. &
+H & H &
+Use sorting networks (e.g.\ bitonic sort) on the exact CGGI scheme, starting
+with 4--8 elements. Implement shuffling as sorting by random keys, as done
+in TFHE-rs \cite{Zam26}.
+\\ \midrule
+ 
+RK3 &
+Memory runs out at small list sizes: HEIR unrolls loops at compile time, and
+large HEIR programs have needed 60--90~GiB at run time
+\cite{ali2025heir, Kun26}. &
+H & M &
+Measure compile-time and run-time memory separately while doubling the list
+size. Use partial loop unrolling and report the limit as a result.
+\\ \midrule
+ 
+RK4 &
+Mainline HEIR has no GPU backend yet; GPU support is still work in progress
+and TPU support (via Jaxite) covers only some schemes
+\cite{Goo26, Kun26}. &
+H & H &
+Agree on a fallback: CPU vs.\ TPU only, or
+HEIR on CPU vs.\ an existing GPU implementation such as TFHE-rs
+\cite{Zam26}.
+\\ \midrule
+ 
+RK5 &
+Compiled programs may return wrong results through compiler bugs or
+precision loss in approximate schemes such as CKKS
+\cite{ali2025heir, Kun26}. &
+M & H &
+Check every encrypted run against a plaintext reference, and use HEIR's
+plaintext backend and debug tools to find where results diverge
+\cite{ali2025heir}.
+\\
+\end{longtable}
+\endgroup
+ 

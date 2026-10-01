@@ -1,34 +1,234 @@
 \section{Implementation}
 
+% -----------------------------------------------------------------------------
+% PLANNING CONVENTIONS (used in 3.1--3.4)
+% W1 = week in which this plan is handed in. Calendar assumptions, to be
+% replaced by real dates:  W2 = exam week (period 1), W10 = exam week
+% (period 2), W11--W12 = Christmas break, W13--W16 = final project weeks.
+% Objective IDs O1--O5 are provisional and must match Section 1.2.
+% Jimena's original six phases (old 3.3 list) are now task groups T1--T6.
+% -----------------------------------------------------------------------------
+
+% Short macro for task descriptions in the work plan:
+% \task{ID}{title}{lead}{participants}{weeks}{description}
+\newcommand{\task}[6]{%
+  \par\noindent\textbf{#1 #2}, lead: \textbf{#3}, participants: #4 (#5).\enspace #6\par\smallskip}
+\newcommand{\taskgroup}[3]{%
+  \par\medskip\noindent\colorbox{black!8}{\parbox{\dimexpr\linewidth-2\fboxsep}{\textbf{#1}\hfill lead: #2 \quad #3}}\par\smallskip}
 
 \subsection{Gantt chart}
+\secinfo{Grégoire Mariette}{Abdul Moiz Akbar}
 
+Figure~\ref{fig:gantt} shows all tasks (Section~\ref{sec:workplan}), milestones (Section~\ref{sec:milestones}) and deliverables (Section~\ref{sec:deliverables}) on one time line. Weeks are numbered relative to the hand-in of this plan (W1). W2 and W10 are exam weeks in which only unattended benchmark runs on the cluster are scheduled; no work is planned during the Christmas break (W11--W12). The task lead is given in brackets; participants are listed in the work plan.
 
+\begin{figure}[htbp]
+\centering
+\resizebox{\textwidth}{!}{%
+\begin{ganttchart}[
+    hgrid,
+    vgrid={*1{black!20, dotted}},
+    x unit=0.74cm,
+    y unit title=0.55cm,
+    y unit chart=0.46cm,
+    title/.append style={fill=black!10, draw=black!40},
+    title label font=\scriptsize\bfseries,
+    bar label font=\scriptsize,
+    group label font=\scriptsize\bfseries,
+    milestone label font=\scriptsize\itshape,
+    bar/.append style={fill=blue!25, draw=blue!60!black},
+    bar height=0.6, bar top shift=0.2,
+    group/.append style={fill=black!70, draw=black!70},
+    group height=0.3, group top shift=0.35, group peaks height=0.15,
+    milestone/.append style={fill=red!75!black, draw=red!50!black},
+    milestone height=0.7, milestone top shift=0.15,
+    milestone left shift=.2, milestone right shift=-.2,
+    link/.style={-latex, draw=black!55, thick},
+  ]{1}{16}
+  \gantttitle{W1}{1}\gantttitle{W2}{1}\gantttitle{W3}{1}\gantttitle{W4}{1}%
+  \gantttitle{W5}{1}\gantttitle{W6}{1}\gantttitle{W7}{1}\gantttitle{W8}{1}%
+  \gantttitle{W9}{1}\gantttitle{W10}{1}\gantttitle{W11}{1}\gantttitle{W12}{1}%
+  \gantttitle{W13}{1}\gantttitle{W14}{1}\gantttitle{W15}{1}\gantttitle{W16}{1} \\
+  % calendar
+  \ganttbar[bar/.append style={fill=black!30, draw=black!30},
+            bar label font=\scriptsize\itshape]{Exams / Christmas break}{2}{2}
+  \ganttbar[bar/.append style={fill=black!30, draw=black!30}]{}{10}{12} \\
+  % T1
+  \ganttgroup{T1 Toolchain \& infrastructure (Grégoire)}{1}{5} \\
+  \ganttbar{T1.1 HEIR environment (Grégoire)}{1}{3} \\
+  \ganttbar{T1.2 CPU sanity check (Abdul Moiz)}{3}{4} \\
+  \ganttbar{T1.3 Accelerator access (Mikle)}{1}{5} \\
+  \ganttmilestone{MS1 Toolchain validated}{4} \\
+  \ganttmilestone[name=ms2]{MS2 Hardware go/no-go}{5} \\
+  % T2
+  \ganttgroup{T2 Algorithms \& correctness (Abdul Moiz)}{3}{7} \\
+  \ganttbar{T2.1 Sorting networks (Abdul Moiz)}{3}{7} \\
+  \ganttbar{T2.2 Oblivious shuffle (Mikle)}{4}{7} \\
+  \ganttbar{T2.3 Reference \& tests (Vlad)}{3}{6} \\
+  \ganttmilestone[name=ms3]{MS3 Algorithms correct}{7} \\
+  % T3
+  \ganttgroup{T3 Scalability \& limits (Joris)}{6}{9} \\
+  \ganttbar{T3.1 Benchmark harness (Joris)}{6}{8} \\
+  \ganttbar[name=t32]{T3.2 CPU parameter sweep (Joris)}{8}{9} \\
+  \ganttmilestone[name=ms4]{MS4 CPU limits established}{9} \\
+  % T4
+  \ganttgroup{T4 Cross-hardware execution (Mikle)}{6}{14} \\
+  \ganttbar[name=t41]{T4.1 GPU runs (Grégoire)}{8}{10}
+  \ganttbar{}{13}{14} \\
+  \ganttbar[name=t42]{T4.2 TPU runs (Vlad)}{8}{10}
+  \ganttbar{}{13}{14} \\
+  \ganttbar{T4.3 Hand-written baseline (Mikle)}{6}{9} \\
+  % T5
+  \ganttgroup{T5 Cloud cost model (Jimena)}{8}{14} \\
+  \ganttbar{T5.1 Pricing \& hardware mapping (Jimena)}{8}{9} \\
+  \ganttbar{T5.2 Cost per operation (Jimena)}{13}{14} \\
+  \ganttmilestone{MS5 Results freeze}{14} \\
+  % T6
+  \ganttgroup{T6 Analysis \& reporting (Louis Nathan)}{13}{16} \\
+  \ganttbar{T6.1 Results analysis (Louis Nathan)}{13}{14} \\
+  \ganttbar{T6.2 Final report (Louis Nathan)}{13}{16} \\
+  \ganttbar{T6.3 Presentation \& demo (Abdul Moiz)}{15}{16} \\
+  \ganttbar{T6.4 Repository handover (Joris)}{15}{16} \\
+  % T7
+  \ganttgroup{T7 Management \& liaison (Vlad)}{1}{16} \\
+  \ganttbar{T7.1 Team coordination (Vlad)}{1}{10}
+  \ganttbar{}{13}{16} \\
+  \ganttbar{T7.2 Roseman Labs \& supervisor (Jimena)}{1}{10}
+  \ganttbar{}{13}{16} \\
+  % T8 stretch
+  \ganttbar[name=t8, bar/.append style={fill=blue!6, draw=blue!60!black, dashed},
+            bar label font=\scriptsize\itshape]{T8 Stretch: FHE vs.\ MPC (Louis Nathan)}{13}{15} \\
+  % deliverables
+  \ganttmilestone[milestone/.append style={fill=black, draw=black}]{D1 Project plan}{1} \\
+  \ganttmilestone[milestone/.append style={fill=black, draw=black}]{D4 Interim update to Roseman Labs}{9} \\
+  \ganttmilestone[milestone/.append style={fill=black, draw=black}]{D5 Benchmark data \& cost tables}{15} \\
+  \ganttmilestone[milestone/.append style={fill=black, draw=black}]{D2 Final report, D3 presentation, D6 repository}{16}
+  \ganttlink{ms2}{t41}
+  \ganttlink{ms2}{t42}
+  \ganttlink{ms3}{t32}
+  \ganttlink{ms4}{t8}
+\end{ganttchart}}
+\caption{Gantt chart. Black bars: task groups; blue bars: tasks; red diamonds: milestones; black diamonds: deliverables; grey: exam weeks and Christmas break; dashed: stretch goal. Arrows show the main dependencies.}
+\label{fig:gantt}
+\end{figure}
 
-\subsection{Work plan}                                   % 3 pages max
+\subsection{Work plan}\label{sec:workplan}
+\secinfo{Grégoire Mariette, Jimena Narvaez del Cid}{Abdul Moiz Akbar}
 
+The work is organised in six task groups that follow the phases of the project (T1--T6), a management task group (T7) and one stretch goal (T8). Each task has one lead, who is accountable for its result, a list of participants, a duration in weeks and a measurable indicator of completion. Every team member leads at least two tasks. For each task we give the objectives it serves (O1--O5, Section~1.2) and the risks it mitigates (RK1--RK5, Section~3.5). Team members are referred to by first name: Abdul Moiz, Grégoire, Jimena, Joris, Louis Nathan, Mikle and Vlad.
 
+\taskgroup{T1 Toolchain and infrastructure}{Grégoire}{W1--W5}
+\task{T1.1}{Reproducible HEIR environment}{Grégoire}{Joris}{W1--W3}{Pin one HEIR release and package it with all dependencies in a Docker image that runs on our laptops and on the DACS GPU cluster. \textit{Indicator:} all seven members and the cluster build the image and run HEIR's bundled examples. \textit{Serves} O5; \textit{mitigates} RK1.}
+\task{T1.2}{End-to-end CPU sanity check}{Abdul Moiz}{Grégoire}{W3--W4}{Compile a single encrypted 8-bit comparison with HEIR's CGGI (Boolean) pipeline, run it on a CPU backend and decrypt the result. \textit{Indicator:} correct output on 100 random input pairs; compile and run time recorded. \textit{Serves} O1; \textit{mitigates} RK2, RK5.}
+\task{T1.3}{Accelerator access}{Mikle}{Vlad}{W1--W5}{Reserve GPU nodes on the DACS cluster, apply for TPU access (Google TPU Research Cloud or free cloud-notebook TPUs) and track the status of HEIR's GPU backend. \textit{Indicator:} written access status per hardware type, used for the decision at MS2. \textit{Serves} O3; \textit{mitigates} RK4.}
 
-\subsection{Milestones} % 1/2 page max
-\secinfo{Jimena}{tbd}
-\begin{enumerate}
-    \item Set up and testing:  Set up the Google HEIR and MLIR ecosystem, create testing environments and toolchain access to the hardware backend we want to test (CPU, GPU, TPU). Implement sanity checks to confirm the pipeline works from code to hardware representation. 
-    \item Implementation of the Algorithm and Correctness verification: Implement the integer sorting algorithm using HEIR-supported programs, the integer shuffling algorithm and verify it correctness. 
-    \item Boundary and scalability tests: Test the compiler by varying input parameters, stablish the maximum and minimum boundaries supported before encountering memory limitation or algorithmic bottlenecks. 
-    \item Hardware Execution and profiling: Deploy sorting and shuffling workloads across the three tested hardware (CPU, GPU and TPU), record the runtime execution latency, memory footprint, throughput, and compilation overhead for each hardware tested and compare the results. 
-    \item Cost and operation analysis:  Analyze the cost with the hardware execution times and memory consumption to cloud provider billing models, calculating the real-world operational cost per sorting and shuffling workload across each hardware. Identify the most economical hardware configuration for different input sizes. 
-    \item Document, contrast and analyze the results. 
-\end{enumerate}
+\taskgroup{T2 Algorithms and correctness}{Abdul Moiz}{W3--W7}
+\task{T2.1}{Oblivious sorting networks}{Abdul Moiz}{Louis Nathan}{W3--W7}{Implement bitonic sort and odd-even merge sort, whose sequence of comparisons does not depend on the data, parameterised by list length $N$ and bit width $b$; start at $N=4$, $b=8$. \textit{Indicator:} both networks compile and run for $N \in \{4, 8, 16\}$, $b=8$. \textit{Serves} O1, O2; \textit{mitigates} RK2.}
+\task{T2.2}{Oblivious shuffle}{Mikle}{Jimena}{W4--W7}{Implement shuffling as sorting by encrypted random keys, reusing T2.1. Agree with Roseman Labs on where the randomness comes from (client-supplied encrypted keys or encrypted pseudo-random generation) and what the server may learn. \textit{Indicator:} documented threat model; shuffle compiles and runs for $N \in \{4, 8, 16\}$, $b=8$. \textit{Serves} O1.}
+\task{T2.3}{Plaintext reference and test suite}{Vlad}{Joris}{W3--W6}{Python reference implementations and an automated test suite that runs after every change. \textit{Indicator:} sort output equals the plaintext sort on $\geq 100$ random inputs per configuration; shuffle output is a permutation of its input, and for $N=4$ the 24 possible permutations pass a $\chi^2$ uniformity test over $\geq 240$ runs. \textit{Serves} O1; \textit{mitigates} RK5.}
 
+\taskgroup{T3 Scalability and limits}{Joris}{W6--W9}
+\task{T3.1}{Benchmark harness}{Joris}{Grégoire}{W6--W8}{Scripted runner, submitted as cluster batch jobs, that records compile time, run time, throughput, peak memory of compilation and of execution separately, and ciphertext and key sizes. Each configuration is repeated at least five times; we report median and interquartile range and store all raw data in the repository. \textit{Indicator:} any measurement can be reproduced with one command. \textit{Serves} O2, O5; \textit{mitigates} RK3.}
+\task{T3.2}{CPU parameter sweep}{Joris}{Abdul Moiz, Louis Nathan}{W8--W9, unattended runs may continue in W10}{Double $N$ from 4 upwards for $b \in \{8, 16, 32\}$ until a run exceeds the per-run budget (provisionally 1\,h and 64\,GB RAM, fixed at MS1 from the cluster's capacity). \textit{Indicator:} maximum $N$ per $b$ for sort and shuffle, with the limiting factor (time, compile memory or run memory). \textit{Serves} O2; \textit{mitigates} RK3.}
 
+\taskgroup{T4 Cross-hardware execution}{Mikle}{W6--W14}
+\task{T4.1}{GPU execution}{Grégoire}{Mikle}{W8--W10, W13--W14}{Repeat the T3.2 grid on the DACS GPU nodes with HEIR's GPU backend if MS2 confirms it is usable; otherwise run the hand-written TFHE-rs baseline (T4.3) on GPU as fallback. \textit{Indicator:} run time, memory and throughput for the same $(N, b)$ grid as on CPU. \textit{Serves} O3; \textit{mitigates} RK4.}
+\task{T4.2}{TPU execution}{Vlad}{Abdul Moiz}{W8--W10, W13--W14}{Compile the CGGI programs for TPU through HEIR's Jaxite backend if TPU access is confirmed at MS2. \textit{Indicator:} as for T4.1; without TPU access, a documented limitation instead of results. \textit{Serves} O3; \textit{mitigates} RK4.}
+\task{T4.3}{Hand-written baseline}{Mikle}{Vlad}{W6--W9}{Implement the same sorting network directly in TFHE-rs to measure the overhead of HEIR-generated code against hand-written code on identical hardware. \textit{Indicator:} run-time ratio HEIR\,/\,hand-written per $(N, b)$. \textit{Serves} O3.}
 
+\taskgroup{T5 Cloud cost model}{Jimena}{W8--W14}
+\task{T5.1}{Pricing data and hardware mapping}{Jimena}{Louis Nathan}{W8--W9}{Collect on-demand prices of comparable CPU, GPU and TPU instances from at least two cloud providers on one fixed date, and map each cluster node to its closest instance type. \textit{Serves} O4.}
+\task{T5.2}{Cost per operation}{Jimena}{Grégoire}{W13--W14}{Combine measured run times and memory needs with the T5.1 prices into the cost per sort and per shuffle for each $(N, b)$ and hardware type, and identify the cheapest configuration per input size. \textit{Indicator:} cost table with all assumptions stated. \textit{Serves} O4.}
 
+\taskgroup{T6 Analysis, reporting and handover}{Louis Nathan}{W13--W16}
+\task{T6.1}{Results analysis}{Louis Nathan}{all}{W13--W14}{Answer the research questions and compare the results with related work.}
+\task{T6.2}{Final report (D2)}{Louis Nathan}{all}{W13--W16}{}
+\task{T6.3}{Final presentation and demonstration (D3)}{Abdul Moiz}{all}{W15--W16}{}
+\task{T6.4}{Repository handover (D6)}{Joris}{Grégoire}{W15--W16}{README, Docker image, scripts and raw data handed over to Roseman Labs. \textit{Serves} O5.}
 
+\taskgroup{T7 Project management and customer liaison}{Vlad}{W1--W16}
+\task{T7.1}{Team coordination}{Vlad}{all}{W1--W16}{Weekly team meeting and task board; progress is checked against the milestones, and a missed milestone triggers re-planning in the next meeting.}
+\task{T7.2}{Customer and supervisor contact}{Jimena}{Louis Nathan}{W1--W16}{Meeting with Roseman Labs every two weeks (to be confirmed); agreement on deliverables, confidentiality and the shuffle threat model (T2.2); interim update D4 at MS4.}
 
-\subsection{Deliverables}                                % 1/2 page max
+\taskgroup{T8 Stretch goal: FHE compared with MPC}{Louis Nathan}{W13--W15}
+\task{T8}{FHE vs.\ MPC for sorting and shuffling}{Louis Nathan}{Joris}{W13--W15}{Started only if MS4 is reached on time and Roseman Labs agrees. Compare our sort and shuffle results with MPC figures provided by Roseman Labs or taken from the literature, following the system-level comparison of \cite{huang2026beyond}. Reported as an additional section in D2; not needed for O1--O5.}
 
+\paragraph{Contingency.} Objectives O1 and O2 depend only on CPU results, which are complete at MS4 (W9). The accelerator runs (T4.1, T4.2) have four working weeks plus unattended runs in W10, and can be reduced to fewer configurations without affecting O1 and O2. W10 is the buffer for delayed CPU runs, and the stretch goal T8 is the first activity dropped if the schedule slips.
 
+% TODO (Louis Nathan): objective names below must match Section 1.2.
+\begin{table}[H]
+\centering
+\small
+\caption{Traceability of objectives to tasks, milestones and deliverables.}
+\label{tab:trace}
+\begin{tabularx}{\textwidth}{>{\raggedright\arraybackslash}X l l l}
+\toprule
+\textbf{Objective (Section 1.2)} & \textbf{Tasks} & \textbf{Milestones} & \textbf{Deliverables}\\
+\midrule
+O1 Correct oblivious sort and shuffle in HEIR & T1.2, T2.1--T2.3 & MS1, MS3 & D2, D6\\
+O2 Scalability limits on CPU & T3.1, T3.2 & MS4 & D4, D5\\
+O3 Cross-hardware performance and compiler overhead & T1.3, T4.1--T4.3 & MS2, MS5 & D5\\
+O4 Cloud cost model & T5.1, T5.2 & MS5 & D5\\
+O5 Reproducible benchmark suite & T1.1, T3.1, T6.4 & MS1, MS5 & D6\\
+Stretch: FHE vs.\ MPC & T8 & MS4 & D2\\
+\bottomrule
+\end{tabularx}
+\end{table}
 
+\subsection{Milestones}\label{sec:milestones} % 1/2 page max
+\secinfo{Jimena Narvaez del Cid, Grégoire Mariette}{Mikle Kuzin}
+
+Milestones mark the points at which dependent tasks can start or a scope decision is taken (Figure~\ref{fig:gantt}).
+
+\begin{table}[H]
+\centering
+\small
+\caption{Milestones.}
+\label{tab:milestones}
+\begin{tabularx}{\textwidth}{l >{\raggedright\arraybackslash}p{0.17\textwidth} >{\raggedright\arraybackslash}p{0.12\textwidth} l >{\raggedright\arraybackslash}X}
+\toprule
+\textbf{No.} & \textbf{Milestone name} & \textbf{Involved tasks} & \textbf{Date} & \textbf{Description}\\
+\midrule
+MS1 & Toolchain validated & T1.1, T1.2 & W4 & Pinned HEIR image builds for all members and on the cluster; an encrypted 8-bit comparison runs on CPU and matches plaintext. All algorithm work in HEIR depends on this.\\
+\midrule
+MS2 & Hardware go/no-go & T1.3, T4.1, T4.2 & W5 & Decision per accelerator: HEIR backend, fallback (RK4) or documented limitation. Fixes the scope of T4.1 and T4.2.\\
+\midrule
+MS3 & Algorithms correct & T2.1--T2.3 & W7 & Sort and shuffle pass the full test suite for $N \leq 16$, $b=8$ on CPU. Benchmarking (T3.2, T4) starts only after this point.\\
+\midrule
+MS4 & CPU limits established & T3.1, T3.2, T4.3 & W9 & Maximum $N$ per bit width on CPU and the HEIR\,/\,hand-written ratio are known. Basis for the interim update D4 and the go/no-go of stretch goal T8.\\
+\midrule
+MS5 & Results freeze & T4, T5 & W14 & All measurements and cost tables complete; no new experiments afterwards, so that W15--W16 are reserved for the report and presentation.\\
+\bottomrule
+\end{tabularx}
+\end{table}
+
+\subsection{Deliverables}\label{sec:deliverables} % 1/2 page max
+\secinfo{Grégoire Mariette}{Vlad Ghiţă}
+
+Course deliverables are fixed by the programme; customer deliverables are still to be confirmed with Roseman Labs and the DACS supervisor.
+
+\begin{table}[H]
+\centering
+\small
+\caption{Deliverables.}
+\label{tab:deliverables}
+\begin{tabularx}{\textwidth}{l >{\raggedright\arraybackslash}X l l l l}
+\toprule
+\textbf{No.} & \textbf{Name} & \textbf{Lead} & \textbf{Type} & \textbf{Diss.} & \textbf{Date}\\
+\midrule
+\multicolumn{6}{l}{\textit{Course deliverables}}\\
+D1 & Project plan (this document) & Grégoire & RE & CO & W1\\
+D2 & Final report in the form of a research paper & Louis Nathan & RE & PU$^{*}$ & W16\\
+D3 & Final presentation with live demonstration & Abdul Moiz & DEM & PU$^{*}$ & W16\\
+\midrule
+\multicolumn{6}{l}{\textit{Customer deliverables (Roseman Labs)}}\\
+D4 & Interim update: CPU correctness and scalability results (MS4) & Vlad & RE & CO & W9\\
+D5 & Benchmark dataset and cost tables per $(N, b)$ and hardware & Jimena & OTHER & CO & W15\\
+D6 & Benchmark suite repository: code, Docker image, scripts, documentation & Joris & OTHER & CO$^{*}$ & W16\\
+\midrule
+\multicolumn{6}{p{0.95\textwidth}}{\footnotesize RE: document, report \,|\, DEM: demonstrator, pilot \,|\, DEC: websites, press \& media actions, videos \,|\, OTHER: software, dataset. Dissemination: PU = public, CO = confidential. $^{*}$Final level subject to Roseman Labs' confidentiality requirements.}\\
+\bottomrule
+\end{tabularx}
+\end{table}
 
 \subsection{Risk management}                            % 3 pages max
 \secinfo{Abdul Moiz Akbar}{}

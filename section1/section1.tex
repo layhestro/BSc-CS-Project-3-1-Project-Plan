@@ -1,39 +1,140 @@
+% Define custom column types for layout
+\newcolumntype{L}{>{\raggedright\arraybackslash}X}
+
+\setlength{\parindent}{0pt}
+\setlength{\parskip}{1.5em}
+
+\usetikzlibrary{shapes.geometric, arrows.meta, positioning, fit, backgrounds, calc}
 
 \section{Excellence}
 
 \subsection{Motivation, context, problem statement}      % 1 page max
 \secinfo{Louis Nathan}{Name}
 Fully Homomorphic Encryption (FHE) enables arbitrary computations over encrypted data without requiring access to decryption keys. Despite its significant potential for privacy preserving cloud computing, and secure multi-party computation, its mainstream adoption is hindered by severe computational overhead, and architectural complexity.
-
 To address this software-hardware bottleneck, Google introduced HEIR (Homomorphic Encryption Intermediate Representation) \cite{ali2025heir}, an open-source compiler toolchain constructed within the MLIR (Multi-Level intermediate Representation) ecosystem. HEIR decouples high-level privacy-preserving applications from platform-specific hardware. Developers can define cryptographic operations at a higher abstraction layer and rely on HEIR to compile into various backends automatically.
 
-This research project proposes a structured evaluation of the HEIR compiler framework. By implementing two computationally challenging control flow primitives-sorting lists of encrypted integers and shuffling list of encrypted integers. This project provides a benchmarking suite for the efficiency of the FHE compiler. The evaluation will test the compiler across input scale, bit depth and multiplicative depth, and evaluate the cross-platform execution performance on CPUs, GPUs, and TPUs, deriving computational cost for cloud deployment environments.
+While compiler advancements like HEIR designed to mitigate software-hardware bottlenecks, FHE frameworks lack systematic, structured evaluation suites that assess performance across non-trivial control flow operations, varying cryptographic parameters, and diverse hardware acceleration platforms. To address this gap, we will research on:
+    \item How effectively does the HEIR compiler framework optimizes control flow operations specifically sorting and shuffling across varying input sizes, and target hardware architectures
+
+This research project proposes a structured evaluation of the HEIR compiler framework. By implementing two computationally challenging control flow primitives-sorting lists of encrypted integers and shuffling list of encrypted integers. This project provides a systematic benchmarking suite for the efficiency of the FHE compiler. The evaluation will test the compiler across input scale, bit depth and multiplicative depth (the maximum sequence of homomorphic operations), and evaluate the cross-platform execution performance on CPUs, GPUs, and TPUs, deriving computational cost for cloud deployment environments.
 
 \subsection{Scientific and technological objectives}
 \secinfo{Louis Nathan}{Name} % 2 pages max
 This scientific objectives of this research focuses on expanding the theoretical and empirical understanding of homomorphic circuits, and execution paradigms under homomorphic constraints.
 
+%TODO: FOLLOW TASK numbers 
+% SCIENTIFIC OBJECTIVE 1
 \begin{table}[ht]
-\begin{tabular}{|l|l|}
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|L|}
 \hline
-Objective O1: Characterize Parameter Scalability of Non-Linear Homomorphic Primitives & \\ \hline
-S.M.A.R.T. Justification& Determine security and efficiency by quantifying the boundaries input length for encrypted sorting and shuffling before bootstrapping costs halt computation \\ \hline
-KPIs& Identifying the maximum input length N for an encrypted 32-bit integer\\ \hline
-\end{tabular}
+\textbf{Objective SO1: Characterize Parameter Scalability of Non-Linear Homomorphic Primitives} & \textbf{Addressed in Task 2} \\ \hline
+\textbf{S.M.A.R.T. Justification} & Quantify the exact boundaries of input length (\(N\)) for encrypted oblivious 
+sorting and shuffling. This objective establishes theoretical parameter bounds under MLIR transformations. \\ \hline
+\textbf{KPIs} & \textbf{KPI SO1.1:} Identify maximum list length \(N_{\max} \ge 256\) elements for 32-bit integers without cipher-text decryption errors. \newline \textbf{KPI SO1.2:} Generate multiplicative depth vs. noise consumption curves for oblivious sorting and shuffling networks. \newline \textbf{KPI SO1.3:} Achieve \(0\%\) decryption error rate across 1,000 trial runs per parameter configuration using HEIR's automatic scheme selection (can nbe adjusted based on time and computing power). \\ \hline
+\end{tabularx}
 \end{table}
 
+% TECHNOLOGICAL OBJECTIVE 3
+\begin{table}[ht]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|L|}
+\hline
+\textbf{Objective SO2: Profile Hardware Utilization \& Compute Cloud Operational Running Costs} & \textbf{Addressed in Task 5} \\ \hline
+\textbf{S.M.A.R.T. Justification} & Measure wall-clock latency, memory footprint, and energy consumption across commercial cloud instance types (AWS, Azure) to calculate explicit financial cost models (\(\$/1,000\) operations) during. \\ \hline
+\textbf{KPIs} & \textbf{KPI SO2.1:} Calculate exact cost-per-element operational metrics across at least 3 major cloud provider pricing tiers. \newline \textbf{KPI SO5.2:} Deliver a structured Cloud Hardware Selection Framework matching workload size to the most cost-effective hardware instance type. \\ \hline
+\end{tabularx}
+\end{table}
 
-
-
+\newpage
 \subsection{Requirements}   
 \secinfo{Louis Nathan}{Name} % 2 pages max
 
+R1 Programming language \newline
+R1.1 Encrypted oblivious integer sorting and shuffling should be implemented in MLIR/C++ (priority 1) \newline
+R1.2 Data collection, benchmark scripts, automated test, verification pipelines, and financial cost modeling tools should be implemented in Python (priority 1)
 
+R2 System Architecture \newline
+R2.1 The evaluation environment shall be implemented in the form of modular, independently functioning components that communicate through a set of structured interfaces \newline
+R2.2 All implemented sorting and shuffling algorithmic control flows and memory access patterns must be strictly data-oblivious (zero secret-dependent branching) to prevent side-channel leakage (priority 1)
+R2.3 The profiling harness shall capture wall-clock latency, host-to-device data transfer times, and execution duration
 \subsection{Concept and approach} 
-\secinfo{Louis Nathan}{Name}% 3 pages max
+\secinfo{Louis Nathan}{Joris}% 3 pages max
+% in the work so far i have found a couple of things that might be interesting to test for. namely where MPC and FHE meet in viability. this coupled with maybe a throttle test on a network to simulate latency would be interesting. 
 
-in the work so far i have found a couple of things that might be interesting to test for. namely where MPC and FHE meet in viability. this coupled with maybe a throttle test on a network to simulate latency would be interesting. 
+\subsubsection{Concept}
+The primary objective of this project is to conduct a systematic evaluation Google's HEIR compiler by measuring its performance, hardware portability, and economic viability.
+FHE allows arbitrary computation on encrypted cipher-texts. However, executing non-linear operations such as comparison and shuffling in the encrypted domain introduces significant computational overhead. Traditionally, developers were forced to manually provide target-specific implementations using low-level cryptosystem APIs (e.g., OpenFHE \cite{cryptoeprint:2022/915}, Lattigo \cite{lattigo}) and tailor them to discrete hardware primitives.
 
+\subsubsection{Approach}
+To decouple high-level cryptographic logic from heterogeneous hardware, Google introduced HEIR, MLIR framework. As illustrated in \ref{fig:system_architecture} the chosen approach leverages HEIR to take high-level algorithm descriptions, pass them through MLIR optimization passes, and generate target-specific low-level code (e.g., OpenFHE C++, Jaxite/JAX \cite{jax2018github}) across heterogeneous hardware acceleration profiles (CPUs, GPUs, and TPUs). By executing two  algorithms; \textbf{oblivious list sorting} and \textbf{oblivious list shuffling}, we systematically stress-test HEIR's optimization passes, auto-parameter selection, and code-generation pipelines.
+
+\begin{figure}[htbp]
+\centering
+\begin{tikzpicture}[
+    node distance=1.3cm and 1.0cm,
+    box/.style={draw, rectangle, rounded corners=3pt, align=center, minimum height=0.9cm, minimum width=2.4cm, fill=blue!5, font=\small},
+    mlirbox/.style={draw, rectangle, rounded corners=3pt, align=center, minimum height=0.9cm, minimum width=2.4cm, fill=orange!10, font=\small},
+    hwbox/.style={draw, rectangle, rounded corners=3pt, align=center, minimum height=0.8cm, minimum width=2.0cm, fill=green!10, font=\small},
+    arrow/.style={-Stealth, thick, draw=gray!80}
+]
+
+% Nodes
+\node (src) [box] {High-Level Program\\(Python / C++)};
+\node (heir) [mlirbox, right=of src] {HEIR Compiler\\(MLIR Dialects \& Passes)};
+\node (codegen) [box, right=of heir] {Target Backends\\(OpenFHE / Jaxite JAX)};
+
+% Hardware Targets
+\node (cpu) [hwbox, right=1.2cm of codegen, yshift=1.2cm] {CPU\\(x86\_64 AVX-512)};
+\node (gpu) [hwbox, right=1.2cm of codegen, yshift=0cm] {GPU\\(NVIDIA CUDA)};
+\node (tpu) [hwbox, right=1.2cm of codegen, yshift=-1.2cm] {TPU\\(Google TPU v4/v5e)};
+
+% Benchmarking Container
+\node (bench) [draw, dashed, inner sep=0.3cm, fit=(cpu) (gpu) (tpu), label=above:\textbf{Benchmark Environments}] {};
+
+% Connections
+\draw [arrow] (src) -- (heir);
+\draw [arrow] (heir) -- (codegen);
+\draw [arrow] (codegen) -- (cpu);
+\draw [arrow] (codegen) -- (gpu);
+\draw [arrow] (codegen) -- (tpu);
+
+\end{tikzpicture}
+\caption{System Architecture Overview: Decoupling high-level algorithm logic from FHE hardware targets using the HEIR compiler framework.}
+\label{fig:system_architecture}
+\end{figure}
+
+\newpage
+
+In plain-texts, sorting and shuffling rely on conditional branching (e.g., \texttt{if (A > B)}) and array indexing based on secret data. In Fully Homomorphic Encryption, conditional branching on cipher-texts is strictly prohibited because data values cannot be leaked to the execution environment. Consequently, operations must be reformulated as data-oblivious arithmetic circuits. 
+
+\subsubsection{Encrypted List Sorting}
+To evaluate HEIR's ability to compile comparison-heavy logic, we implement a \textbf{Bitonic Sorting Networks} \cite{1993icpp....1...23L}. Standard comparison algorithms ($O(N \log N)$ average complexity) exhibit input-dependent branch execution paths. Bitonic Sorting transforms the sorting process into a fixed sequence of Compare-and-Swap (CAS) units:
+
+\begin{equation}
+\text{CAS}(x, y) = \Big( \text{min}(x,y),, \text{max}(x,y) \Big)
+\end{equation}
+
+In an encrypted domain, $\text{min}(x,y)$ and $\text{max}(x,y)$ are computed using homomorphic sign evaluators or polynomial approximations:
+\begin{align}
+\text{min}(x, y) &= \frac{x + y - |x - y|}{2} \
+\text{max}(x, y) &= \frac{x + y + |x - y|}{2}
+\end{align}
+
+Bitonic sorting networks enforce a fixed computational depth of $O(\log^2 N)$ and a total of $O(N \log^2 N)$ comparisons regardless of data permutation. Cheon et al., 2019; Gouert et al., 2023) demonstrate that Bitonic sorting is a standard benchmark for testing multiplicative depth and  overheads in Homomorphic encryption compilers.
+
+\subsubsection{Encrypted List Shuffling}
+Permuting data homomorphically without revealing the permutation pattern requires \textbf{Oblivious Permutation Networks} (such as Waksman or Bene\v{s} routing networks). While both Bene\v{s} and Waksman networks realize $O(N \log N)$ permutations in identical stage depth ($2\lceil \log_2 N \rceil - 1$), we  select the Bene\v{s} network over the Waksman network for our HEIR compiler implementation based on the following cryptographic and compiler optimization principles:
+
+\begin{itemize}
+\item \textbf{Structural Symmetry and SIMD Lowering:} A Bene\v{s} network is constructed by concatenating two mirrored, identical sub-networks. Every stage features uniform layout and constant lengths. In contrast, a Waksman network eliminates redundant $2 \times 2$ switches ($\approx N/2$ switches saved total). Because MLIR dialect transformations rely on structured patterns to enable SIMD slot vectorization, the strict topological regularity of Bene\v{s} networks lowers significantly better through MLIR loop passes.
+\item \textbf{Multiplicative depth:} In FHE, the primary computational bottleneck is multiplicative depth. Waksman's switch reduction reduces the total count of addition/multiplication operations by $\approx N/2$, but it does not decrease the overall depth of the network. Since both networks require the exact same multiplicative depth, Waksman provides no advantage.
+\item \textbf{Hardware Accelerator Portability (GPU/TPU):} When lowering code via HEIR to Jaxite or OpenFHE, execution performance on GPUs and TPUs is bottlenecked by memory throughput. The highly symmetric vector permutation in a Bene\v{s} network enable optimal parallel dispatch on NVIDIA CUDA and Google TPU execution pipelines.
+\end{itemize}
+
+A Bene\v{s} network consists of $(2\lceil \log_2 N \rceil - 1)$ stages of $2 \times 2$ routing switches. Each switch performs a homomorphic multiplexing operation conditioned on a control bit $s \in \{0, 1\}$:\begin{align}out_0 &= (1 - s) \cdot in_0 + s \cdot in_1 \\out_1 &= s \cdot in_0 + (1 - s) \cdot in_1\end{align}When control bits $s$ are known to the evaluator or pre-computed (plaintext control bits), the switches perform low-noise Ciphertext $\times$ Plaintext operations, maintaining a overall multiplicative depth bounded by $2\lceil \log_2 N \rceil - 1$.
 
 \subsection{Work so far}                                 % 2 pages max
 \secinfo{Joris}{Name}
@@ -56,8 +157,15 @@ Finally we look at the paper "A Pragmatic Comparison of Cryptographic Computatio
 
 \subsection{Ambition}                                    % 1/2 page max
 \secinfo{Joris}{Name}
-
+Looking at the papers we seem to be the first ones that are evaluating the HEIR framework through a pure shuffling and sorting stance and not a machine learning stance. Having an empirical number quantifying its efficiency would help future research. 
 
 \subsection{Related work}                                % 2 pages max
 \secinfo{Joris}{Name}
-Why is it better than existing solutions?
+
+So why will our research be better than an existing solution? The related work so far is quite scarce, HEIR being a relatively newly introduced framework. Because if this there is still need for comprehensive, independent benchmarking of its cross platform performance.
+
+As referred to in the work so far chapter most of the studies done have focussed privacy preserving machine learning. In the papers "beyond latency" \cite{huang2026beyond} and "a pragmatic comparison of cryptographic computation technologies" \cite{taubert2026pragmatic} system level characterizations and latency evaluations are provided. However theses are focused on linear operations. Moving the focus to non linear operations will expose different limitations of the framework.
+
+So the reasons why our approach will be better for this specific goal is that we have targeted stress testing. Instead of blending linear and non linear task we will purely focus on the bit wise memory bottlenecks identified in existing literature. This should push the HEIR compiler to its absolute theoretical limit. Because we don't use highly optimized linear operations we will have a more unadulterated metric on how efficient the compiler handles complex control flow constraints.
+
+

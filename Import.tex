@@ -24,6 +24,7 @@
 \usepackage{amsmath}
 \usepackage{amsthm}
 \usepackage{amssymb}
+\usepackage{amsfonts}
 \usepackage{mathtools}
 \usepackage{algorithm}
 \usepackage{algorithmic}
@@ -119,6 +120,12 @@
 
 \usepackage{lmodern}
 \usepackage{accsupp}
+
+\usepackage{csquotes}
+\usepackage[style=apa, backend=biber]{biblatex}
+\addbibresource{Bibliographie.bib}
+\let\cite\parencite   % every existing \cite becomes "(Author, year)"
+
 
 \newcommand{\promptinj}[1]{%
     \BeginAccSupp{method=escape,ActualText={#1}}%

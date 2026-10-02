@@ -17,9 +17,9 @@
   \par\medskip\noindent\colorbox{black!8}{\parbox{\dimexpr\linewidth-2\fboxsep}{\textbf{#1}\hfill lead: #2 \quad #3}}\par\smallskip}
 
 \subsection{Gantt chart}
-\secinfo{Grégoire Mariette}{Abdul Moiz Akbar}
+\secinfo{Grégoire Mariette}{Jimena Narvaez del Cid}
 
-Figure~\ref{fig:gantt} shows all tasks (Section~\ref{sec:workplan}), milestones (Section~\ref{sec:milestones}) and deliverables (Section~\ref{sec:deliverables}) on one time line. Weeks are numbered relative to the hand-in of this plan (W1). W2 and W10 are exam weeks in which only unattended benchmark runs on the cluster are scheduled; no work is planned during the Christmas break (W11--W12). The task lead is given in brackets; participants are listed in the work plan.
+Figure~\ref{fig:gantt} shows all tasks (Section~\ref{sec:workplan}), milestones (Section~\ref{sec:milestones}) and deliverables (Section~\ref{sec:deliverables}) on one time line. Weeks are numbered relative to the hand-in of this plan (W1). W2 and W10 are exam weeks in which only unattended benchmark runs on the cluster are scheduled; no work is planned during the Christmas break (W11--W12).
 
 \begin{figure}[htbp]
 \centering
@@ -112,7 +112,7 @@ Figure~\ref{fig:gantt} shows all tasks (Section~\ref{sec:workplan}), milestones 
 \end{figure}
 
 \subsection{Work plan}\label{sec:workplan}
-\secinfo{Grégoire Mariette, Jimena Narvaez del Cid}{Abdul Moiz Akbar}
+\secinfo{Grégoire Mariette}{Jimena Narvaez del Cid}
 
 The work is organised in six task groups that follow the phases of the project (T1--T6), a management task group (T7) and one stretch goal (T8). Each task has one lead, who is accountable for its result, a list of participants, a duration in weeks and a measurable indicator of completion. Every team member leads at least two tasks. For each task we give the objectives it serves (O1--O5, Section~1.2) and the risks it mitigates (RK1--RK5, Section~3.5). Team members are referred to by first name: Abdul Moiz, Grégoire, Jimena, Joris, Louis Nathan, Mikle and Vlad.
 
@@ -175,7 +175,7 @@ Stretch: FHE vs.\ MPC & T8 & MS4 & D2\\
 \end{table}
 
 \subsection{Milestones}\label{sec:milestones} % 1/2 page max
-\secinfo{Jimena Narvaez del Cid, Grégoire Mariette}{Mikle Kuzin}
+\secinfo{Jimena Narvaez del Cid}{Grégoire Mariette}
 
 Milestones mark the points at which dependent tasks can start or a scope decision is taken (Figure~\ref{fig:gantt}).
 
@@ -202,7 +202,7 @@ MS5 & Results freeze & T4, T5 & W14 & All measurements and cost tables complete;
 \end{table}
 
 \subsection{Deliverables}\label{sec:deliverables} % 1/2 page max
-\secinfo{Grégoire Mariette}{Vlad Ghiţă}
+\secinfo{Grégoire Mariette}{}
 
 Course deliverables are fixed by the programme; customer deliverables are still to be confirmed with Roseman Labs and the DACS supervisor.
 
@@ -309,4 +309,125 @@ plaintext backend and debug tools to find where results diverge
 \\
 \end{longtable}
 \endgroup
+
+\subsubsection*{Risks from resources and measurement}
  
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{
+  >{\raggedright\arraybackslash}p{0.05\textwidth}
+  >{\raggedright\arraybackslash}p{0.34\textwidth}
+  >{\centering\arraybackslash}p{0.055\textwidth}
+  >{\centering\arraybackslash}p{0.075\textwidth}
+  >{\raggedright\arraybackslash}p{0.345\textwidth}}
+\caption{Risks from resources and measurement.}\label{tab:risk-res}\\
+\toprule
+\textbf{ID} & \textbf{Risk} & \textbf{Prob.} & \textbf{Impact} & \textbf{Mitigation plan}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Risk} & \textbf{Prob.} & \textbf{Impact} & \textbf{Mitigation plan}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+RK6 &
+Benchmark results are unreliable, e.g.\ noisy timings on shared nodes or batch jobs failing during unattended runs. &
+M & M &
+Repeat each configuration at least several times, report median and IQR, and script every run so failed jobs can be resubmitted with one command.
+\\ \midrule
+
+RK7 &
+Cloud cost estimates are inaccurate because prices change and cluster nodes do not match cloud instances exactly. &
+M & L &
+Collect prices on one fixed date from at least two providers, map nodes to the closest instance type, and state all assumptions.
+
+\end{longtable}
+\endgroup
+
+
+\subsubsection*{Risks from project scope and management}
+ 
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{
+  >{\raggedright\arraybackslash}p{0.05\textwidth}
+  >{\raggedright\arraybackslash}p{0.34\textwidth}
+  >{\centering\arraybackslash}p{0.055\textwidth}
+  >{\centering\arraybackslash}p{0.075\textwidth}
+  >{\raggedright\arraybackslash}p{0.345\textwidth}}
+\caption{Risks from project scope and management.}\label{tab:risk-scope}\\
+\toprule
+\textbf{ID} & \textbf{Risk} & \textbf{Prob.} & \textbf{Impact} & \textbf{Mitigation plan}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Risk} & \textbf{Prob.} & \textbf{Impact} & \textbf{Mitigation plan}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+
+RK8 &
+The team has little prior experience with FHE, MLIR and compilers, so the learning curve may delay implementation. &
+H & M &
+Build up in small steps and share knowledge in the weekly team meeting.
+\\ \midrule
+
+RK9 &
+Extra experiments, such as the FHE vs.\ MPC comparison, take time away from the core benchmarks. &
+M & H &
+Keep FHE vs.\ MPC as stretch goal T8, started only if MS4 is met on time and Roseman Labs agrees; it is the first activity dropped if the schedule slips.
+\\ \midrule
+
+
+RK10 &
+Members are unavailable (illness, exam weeks), or the workload of seven members is uneven. &
+M & M &
+Every task has a lead and participants; progress is checked weekly against milestones.
+
+
+\end{longtable}
+\endgroup
+
+\subsubsection*{Risks from customer involvement}
+
+
+\begingroup
+\small
+\renewcommand{\arraystretch}{1.25}
+\begin{longtable}{
+  >{\raggedright\arraybackslash}p{0.05\textwidth}
+  >{\raggedright\arraybackslash}p{0.34\textwidth}
+  >{\centering\arraybackslash}p{0.055\textwidth}
+  >{\centering\arraybackslash}p{0.075\textwidth}
+  >{\raggedright\arraybackslash}p{0.345\textwidth}}
+\caption{Risks from customer involvement.}\label{tab:risk-cust}\\
+\toprule
+\textbf{ID} & \textbf{Risk} & \textbf{Prob.} & \textbf{Impact} & \textbf{Mitigation plan}\\
+\midrule
+\endfirsthead
+\toprule
+\textbf{ID} & \textbf{Risk} & \textbf{Prob.} & \textbf{Impact} & \textbf{Mitigation plan}\\
+\midrule
+\endhead
+\bottomrule
+\endfoot
+
+RK13 &
+Expectations of the team and Roseman Labs diverge, e.g.\ on the shuffle threat model, required hardware, or confidentiality of results. &
+M & H &
+Agree on deliverables, confidentiality and the shuffle threat model in the two-weekly meetings.
+\\ \midrule
+ 
+RK14 &
+The company supervisor has limited availability, delaying answers to blocking questions. &
+M & L &
+Collect questions and schedule meetings in advance.
+\\
+\end{longtable}
+\endgroup

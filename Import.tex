@@ -5,18 +5,15 @@
 \usepackage[utf8]{inputenc}
 \usepackage{parskip}
 \usepackage{geometry}
+\usepackage{setspace}
 
 % Author information
 \author{Grégoire Mariette}
 \date{April 2025}
 
 % Page geometry
-\geometry{
-    a4paper,
-    total={170mm, 257mm},
-    left=20mm,
-    top=20mm,
-}
+\geometry{a4paper, margin=1in, headheight=14pt}
+\doublespacing
 
 %===============================================================================
 % Math Packages
@@ -53,6 +50,7 @@
 \usepackage{tikz}
 \usepackage{pgfgantt} % Gantt chart (Section 3.1)
 \usepackage{float}    % [H] placement for planning tables (Section 3)
+\usepackage{placeins}
 \usepackage{forest}  % For tree diagrams
 \usepackage{dirtree} % Alternative for directory trees
 
@@ -62,7 +60,7 @@
 \usepackage{xcolor}
 \usepackage{color}
 \usepackage{tcolorbox}
-
+\usepackage{newtxtext,newtxmath}
 % Color definitions
 \definecolor{blue}{RGB}{51,131,255}
 \definecolor{applegreen}{RGB}{141,182,0}
@@ -93,22 +91,7 @@
   breaklines=true
 }
 
-%===============================================================================
-% Hyperlinks and URLs
-%===============================================================================
-\usepackage[hyphens]{url}
-\usepackage{hyperref}
 
-% Hyperlink settings
-\hypersetup{
-    colorlinks=true,
-    linkcolor=olive,
-    filecolor=magenta,      
-    urlcolor=cyan,
-    pdftitle={CS1540 Algorithmic Design},
-    pdfpagemode=FullScreen,
-    breaklinks=true
-}
 
 %===============================================================================
 % Document Structure and Formatting
@@ -121,6 +104,7 @@
 \usepackage{lmodern}
 \usepackage{accsupp}
 
+\usepackage[hyphens]{url} 
 \usepackage{csquotes}
 \usepackage[style=apa, backend=biber]{biblatex}
 \addbibresource{Bibliographie.bib}
@@ -152,8 +136,7 @@
 % Personal commands
 \newcommand\y{\par \vspace{3mm}}
 \newcommand{\secinfo}[2]{%
-  \par\noindent\textit{Author(s):} #1\par
-  \noindent\textit{Internal reviewer(s):} #2\par\medskip}
+  \par\noindent\textit{Author(s):} #1 \noindent\textit{Internal reviewer(s):} #2\par\medskip}
   
 % Create subsubsubsection
 \titleclass{\subsubsubsection}{straight}[\subsection]
@@ -190,3 +173,21 @@
 \DeclareUnicodeCharacter{2500}{--}
 \DeclareUnicodeCharacter{2502}{|--}
 \DeclareUnicodeCharacter{2514}{|--}
+
+
+
+%===============================================================================
+% Hyperlinks and URLs
+%===============================================================================
+
+\usepackage{hyperref} % before biblatex, which loads url itself
+
+\hypersetup{
+    colorlinks=true,
+    linkcolor=blue!60!black,
+    citecolor=blue!60!black,
+    urlcolor=blue!60!black,
+    pdftitle={Decentralized Digital Identity and Data Sharing for Healthcare},
+    pdfauthor={Group 11},
+    breaklinks=true
+}

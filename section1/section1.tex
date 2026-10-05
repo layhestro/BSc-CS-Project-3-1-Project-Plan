@@ -9,48 +9,111 @@
 \section{Excellence}
 
 \subsection{Motivation, context, problem statement}      % 1 page max
-\secinfo{Louis Nathan}{Name}
+\secinfo{Louis Nathan}{Mikhail Kuzin}
 Fully Homomorphic Encryption (FHE) enables arbitrary computations over encrypted data without requiring access to decryption keys. Despite its significant potential for privacy preserving cloud computing, and secure multi-party computation, its mainstream adoption is hindered by severe computational overhead, and architectural complexity.
 To address this software-hardware bottleneck, Google introduced HEIR (Homomorphic Encryption Intermediate Representation) \cite{ali2025heir}, an open-source compiler toolchain constructed within the MLIR (Multi-Level intermediate Representation) ecosystem. HEIR decouples high-level privacy-preserving applications from platform-specific hardware. Developers can define cryptographic operations at a higher abstraction layer and rely on HEIR to compile into various backends automatically.
 
-While compiler advancements like HEIR designed to mitigate software-hardware bottlenecks, FHE frameworks lack systematic, structured evaluation suites that assess performance across non-trivial control flow operations, varying cryptographic parameters, and diverse hardware acceleration platforms. To address this gap, we will research on:
+While compiler advancements like HEIR were designed to mitigate software-hardware bottlenecks, FHE frameworks lack systematic, structured evaluation suites that assess performance across non-trivial control flow operations, varying cryptographic parameters, and diverse hardware acceleration platforms. To address this gap, we will research:
 \begin{itemize}
      \item How effectively does the HEIR compiler framework optimizes control flow operations specifically sorting and shuffling across varying input sizes, and target hardware architectures
 \end{itemize}
 
-This research project proposes a structured evaluation of the HEIR compiler framework. By implementing two computationally challenging control flow primitives-sorting lists of encrypted integers and shuffling list of encrypted integers. This project provides a systematic benchmarking suite for the efficiency of the FHE compiler. The evaluation will test the compiler across input scale, bit depth and multiplicative depth (the maximum sequence of homomorphic operations), and evaluate the cross-platform execution performance on CPUs, GPUs, and TPUs, deriving computational cost for cloud deployment environments.
+This research project proposes a structured evaluation of the HEIR compiler framework, by implementing two computationally challenging control flow primitives - sorting lists of encrypted integers and shuffling list of encrypted integers. This project provides a systematic benchmarking suite for the efficiency of the FHE compiler. The evaluation will test the compiler across input scale, bit depth and multiplicative depth (the maximum sequence of homomorphic operations), and evaluate the cross-platform execution performance on CPUs, GPUs, and TPUs, deriving computational cost for cloud deployment environments.
 
 \subsection{Scientific and technological objectives}
-\secinfo{Louis Nathan}{Name} % 2 pages max
-This scientific objectives of this research focuses on expanding the theoretical and empirical understanding of homomorphic circuits, and execution paradigms under homomorphic constraints.
+\secinfo{Louis Nathan}{Mikhail Kuzin} % 2 pages max
+The scientific objectives of this research focuses on expanding the theoretical and empirical understanding of homomorphic circuits, and execution paradigms under homomorphic constraints.
 
 %TODO: FOLLOW TASK numbers 
-% SCIENTIFIC OBJECTIVE 1
-\begin{table}[ht]
+% ==========================================
+% OBJECTIVE 1 (O1)
+% ==========================================
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.3}
 \begin{tabularx}{\textwidth}{|p{0.22\textwidth}|L|}
 \hline
-\textbf{Objective SO1: Characterize Parameter Scalability of Non-Linear Homomorphic Primitives} & \textbf{Addressed in Task 2} \\ \hline
-\textbf{S.M.A.R.T. Justification} & Quantify the exact boundaries of input length (\(N\)) for encrypted oblivious 
-sorting and shuffling. This objective establishes theoretical parameter bounds under MLIR transformations. \\ \hline
-\textbf{KPIs} & \textbf{KPI SO1.1:} Identify maximum list length \(N_{\max} \ge 256\) elements for 32-bit integers without cipher-text decryption errors. \newline \textbf{KPI SO1.2:} Generate multiplicative depth vs. noise consumption curves for oblivious sorting and shuffling networks. \newline \textbf{KPI SO1.3:} Achieve \(0\%\) decryption error rate across 1,000 trial runs per parameter configuration using HEIR's automatic scheme selection (can nbe adjusted based on time and computing power). \\ \hline
+\textbf{Objective O1: Correct oblivious sort and shuffle with HEIR} & \textbf{Addressed in Task 1 and Task 2} \\ \hline
+\textbf{S.M.A.R.T. Justification} & Implement and validate core data-oblivious control-flow primitives using HEIR MLIR dialects.\\ \hline
+\textbf{KPIs} & \textbf{KPI O1.1:} Deliver $2$ verified benchmark modules (Sorting, Shuffling) in MLIR/C++\\ \hline
 \end{tabularx}
 \end{table}
 
-% TECHNOLOGICAL OBJECTIVE 3
-\begin{table}[ht]
+% ==========================================
+% OBJECTIVE 2 (O2)
+% ==========================================
+\begin{table}[htbp]
 \centering
 \renewcommand{\arraystretch}{1.3}
 \begin{tabularx}{\textwidth}{|p{0.22\textwidth}|L|}
 \hline
-\textbf{Objective SO2: Profile Hardware Utilization \& Compute Cloud Operational Running Costs} & \textbf{Addressed in Task 5} \\ \hline
-\textbf{S.M.A.R.T. Justification} & Measure wall-clock latency, memory footprint, and energy consumption across commercial cloud instance types (AWS, Azure) to calculate explicit financial cost models (\(\$/1,000\) operations) during. \\ \hline
-\textbf{KPIs} & \textbf{KPI SO2.1:} Calculate exact cost-per-element operational metrics across at least 3 major cloud provider pricing tiers. \newline \textbf{KPI SO2.2:} Deliver a structured Cloud Hardware Selection Framework matching workload size to the most cost-effective hardware instance type. \\ \hline
+\textbf{Objective O2: Scalability limits on CPU} & \textbf{Addressed in Task 2} \\ \hline
+\textbf{S.M.A.R.T. Justification} & Quantify the exact scalability boundaries of vector length (\(N\)) and bit depth (\(b\)) on CPU hardware before ciphertext noise accumulation exceeds scheme capacity. \\ \hline
+\textbf{KPIs} & \textbf{KPI O2.1:} Identify maximum supported list length \(N_{\max} \ge 256\) elements for $32$-bit integers without unmanaged decryption errors. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ==========================================
+% OBJECTIVE 3 (O3)
+% ==========================================
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|L|}
+\hline
+\textbf{Objective O3: Cross-hardware performance and compiler overhead} & \textbf{Addressed in Task 3 and Task 4} \\ \hline
+\textbf{S.M.A.R.T. Justification} & Deploy compiled HEIR intermediate representations across available backends (CPU, GPU, TPU) without modifying application source code to measure compiler lowering overheads and acceleration speedup factors. \\ \hline
+\textbf{KPIs} & \textbf{KPI O3.1:} Achieve \(100\%\) zero-code-change redeployment across CPU, GPU, and TPU environments. \newline \textbf{KPI O3.2:} Measure backend acceleration speedups, targeting \(\ge 5\times\) on GPUs and \(\ge 10\times\) on TPUs relative to CPU execution. \newline \textbf{KPI O3.3:} Maintain HEIR lowering compilation overhead within \(\le 1.25\times\) (\(<25\%\)) compared to native manual baselines. \\ \hline
+\end{tabularx}
+\end{table}
+
+% ==========================================
+% OBJECTIVE 4 (O4)
+% ==========================================
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|L|}
+\hline
+\textbf{Objective O4: Cloud cost model} & \textbf{Addressed in Task 5} \\ \hline
+\textbf{S.M.A.R.T. Justification} & Capture wall-clock execution latency, host/device memory footprint, and energy consumption across commercial cloud instance types (AWS, GCP, Azure) to calculate explicit financial cost models (\(\$/1,000\) operations). \\ \hline
+\textbf{KPIs} & \textbf{KPI O4.1:} Calculate exact cost-per-element operational metrics with precision within \(\pm 2\%\) across at least $3$ major cloud provider pricing tiers. \newline \textbf{KPI O4.2:} Deliver a structured Cloud Hardware Selection Framework matching workload size to the most cost-effective instance type. \\ \hline
 \end{tabularx}
 \end{table}
 
 \newpage
+
+% ==========================================
+% OBJECTIVE 5 (O5)
+% ==========================================
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|L|}
+\hline
+\textbf{Objective O5: Reproducible benchmark suite} & \textbf{Addressed in Task 1 and Task 6} \\ \hline
+\textbf{S.M.A.R.T. Justification} & Release an open-source, fully documented benchmarking repository featuring automated CI/CD execution drivers, verification suites, and complete empirical evaluation datasets. \\ \hline
+\textbf{KPIs} & \textbf{KPI O5.1:} Publish a GitHub repository with complete build scripts and reproducible experiment configurations.\\ \hline
+\end{tabularx}
+\end{table}
+
+% ==========================================
+% STRETCH OBJECTIVE: FHE vs. MPC
+% ==========================================
+\begin{table}[htbp]
+\centering
+\renewcommand{\arraystretch}{1.3}
+\begin{tabularx}{\textwidth}{|p{0.22\textwidth}|L|}
+\hline
+\textbf{Stretch Objective: FHE vs. MPC viability crossover} & \textbf{Addressed in Task 4} \\ \hline
+\textbf{S.M.A.R.T. Justification} & Evaluate local non-interactive FHE compute performance against interactive Multi-Party Computation (MPC via MP-SPDZ) under simulated network latency and bandwidth throttling to map the exact network RTT crossover threshold. \\ \hline
+\textbf{KPIs} & \textbf{KPI S1.1:} Map latency crossover curves across network round-trip times (\(\text{RTT} \in [1\text{ms}, 200\text{ms}]\)) and bandwidth limits (\(10\text{ Mbps} - 10\text{ Gbps}\)). \\ \hline
+\end{tabularx}
+\end{table}
+
+\FloatBarrier
+% \newpage
+
 \subsection{Requirements}   
 \secinfo{Louis Nathan}{Name} % 2 pages max
 

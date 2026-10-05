@@ -1,5 +1,4 @@
-\documentclass{article}
-
+\documentclass[10pt, a4paper]{article}
 \input{Import}
 
 \begin{document}
@@ -7,11 +6,11 @@
 \include{TitlePage/TitlePage}
 \tableofcontents 
 
-
-\include{section1/section1}
-\include{section2/section2}
-\include{section3/section3}
-\include{Conclusion/Conclusion}
+\newpage
+\input{section1/section1}
+\input{section2/section2}
+\input{section3/section3}
+\input{Conclusion/Conclusion}
 
 \clearpage
 \printbibliography

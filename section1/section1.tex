@@ -115,7 +115,7 @@ The scientific objectives of this research focuses on expanding the theoretical 
 % \newpage
 
 \subsection{Requirements}   
-\secinfo{Louis Nathan}{Name} % 2 pages max
+\secinfo{Louis Nathan}{Abdul Moiz Akbar} % 2 pages max
 
 R1 Programming language \newline
 R1.1 Encrypted oblivious integer sorting and shuffling should be implemented in MLIR/C++ (priority 1) \newline
@@ -206,7 +206,7 @@ A Bene\v{s} network consists of $(2\lceil \log_2 N \rceil - 1)$ stages of $2 \ti
 
 Our implementation relies on the compiler infrastructure established in \cite{ali2025heir}. By providing an abstraction layer that decouples application logic from a specific cryptographic back-end, their work supplies the tool chain we use to compile our sorting and shuffling algorithms.
 
-To anticipate the hardware bottlenecks we are going to face in this project we look at the benchmarking already done in \cite{bian2023heir}. This paper exposes a fundamental limitation inherent to FHE. Bit wise operations will cause memory usage to scale exponentially. Our work will rely mostly on bitwise operation. So from this we are estimating that we will hit a memory wall long before we hit a computational wall.
+To anticipate the hardware bottlenecks we are going to face in this project, we look at the benchmarking already done in \cite{bian2023heir}. Although this is a different HEIR framework, by coincidence with the same name, this paper exposes a fundamental limitation inherent to FHE. Bit wise operations will cause memory usage to scale exponentially. Our work will rely mostly on bitwise operation, so from this we are estimating that we will hit a memory wall long before we hit a computational wall.
 
 The problem is if you use MPC too much the memory wall will come down but the communication wall will rise. Every non-linear MPC calculation brings communication and this will throttle the workings, as shuffling and sorting are non-linear algorithms. In the paper Beyond Latency: A System-Level Characterization of MPC and FHE for PPML \cite{huang2026beyond} the specific point where FHE and MPC meet in efficiency is found. This paper primarily focuses on PPML however which is dominated by linear matrix multiplications. Hence their findings will not directly map to ours as we will have mostly bit wise operations. This paper does give us a very rigorous framework to work from if we adapt it to our needs.
 
@@ -221,11 +221,11 @@ Finally we look at the paper "A Pragmatic Comparison of Cryptographic Computatio
 
 
 \subsection{Ambition}                                    % 1/2 page max
-\secinfo{Joris}{Name}
+\secinfo{Joris}{Louis Nathan}
 Looking at the papers we seem to be the first ones that are evaluating the HEIR framework through a pure shuffling and sorting stance and not a machine learning stance. Having an empirical number quantifying its efficiency would help future research. 
 
 \subsection{Related work}                                % 2 pages max
-\secinfo{Joris}{Name}
+\secinfo{Joris}{Louis Nathan}
 
 So why will our research be better than an existing solution? The related work so far is quite scarce, HEIR being a relatively newly introduced framework. Because if this there is still need for comprehensive, independent benchmarking of its cross platform performance.
 

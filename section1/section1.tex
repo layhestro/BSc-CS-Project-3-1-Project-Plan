@@ -14,7 +14,9 @@ Fully Homomorphic Encryption (FHE) enables arbitrary computations over encrypted
 To address this software-hardware bottleneck, Google introduced HEIR (Homomorphic Encryption Intermediate Representation) \cite{ali2025heir}, an open-source compiler toolchain constructed within the MLIR (Multi-Level intermediate Representation) ecosystem. HEIR decouples high-level privacy-preserving applications from platform-specific hardware. Developers can define cryptographic operations at a higher abstraction layer and rely on HEIR to compile into various backends automatically.
 
 While compiler advancements like HEIR designed to mitigate software-hardware bottlenecks, FHE frameworks lack systematic, structured evaluation suites that assess performance across non-trivial control flow operations, varying cryptographic parameters, and diverse hardware acceleration platforms. To address this gap, we will research on:
-    \item How effectively does the HEIR compiler framework optimizes control flow operations specifically sorting and shuffling across varying input sizes, and target hardware architectures
+\begin{itemize}
+     \item How effectively does the HEIR compiler framework optimizes control flow operations specifically sorting and shuffling across varying input sizes, and target hardware architectures
+\end{itemize}
 
 This research project proposes a structured evaluation of the HEIR compiler framework. By implementing two computationally challenging control flow primitives-sorting lists of encrypted integers and shuffling list of encrypted integers. This project provides a systematic benchmarking suite for the efficiency of the FHE compiler. The evaluation will test the compiler across input scale, bit depth and multiplicative depth (the maximum sequence of homomorphic operations), and evaluate the cross-platform execution performance on CPUs, GPUs, and TPUs, deriving computational cost for cloud deployment environments.
 
@@ -44,7 +46,7 @@ sorting and shuffling. This objective establishes theoretical parameter bounds u
 \hline
 \textbf{Objective SO2: Profile Hardware Utilization \& Compute Cloud Operational Running Costs} & \textbf{Addressed in Task 5} \\ \hline
 \textbf{S.M.A.R.T. Justification} & Measure wall-clock latency, memory footprint, and energy consumption across commercial cloud instance types (AWS, Azure) to calculate explicit financial cost models (\(\$/1,000\) operations) during. \\ \hline
-\textbf{KPIs} & \textbf{KPI SO2.1:} Calculate exact cost-per-element operational metrics across at least 3 major cloud provider pricing tiers. \newline \textbf{KPI SO5.2:} Deliver a structured Cloud Hardware Selection Framework matching workload size to the most cost-effective hardware instance type. \\ \hline
+\textbf{KPIs} & \textbf{KPI SO2.1:} Calculate exact cost-per-element operational metrics across at least 3 major cloud provider pricing tiers. \newline \textbf{KPI SO2.2:} Deliver a structured Cloud Hardware Selection Framework matching workload size to the most cost-effective hardware instance type. \\ \hline
 \end{tabularx}
 \end{table}
 
@@ -54,7 +56,7 @@ sorting and shuffling. This objective establishes theoretical parameter bounds u
 
 R1 Programming language \newline
 R1.1 Encrypted oblivious integer sorting and shuffling should be implemented in MLIR/C++ (priority 1) \newline
-R1.2 Data collection, benchmark scripts, automated test, verification pipelines, and financial cost modeling tools should be implemented in Python (priority 1)
+R1.2 Data collection, benchmark scripts, automated test, verification pipelines, and financial cost modelling tools should be implemented in Python (priority 1)
 
 R2 System Architecture \newline
 R2.1 The evaluation environment shall be implemented in the form of modular, independently functioning components that communicate through a set of structured interfaces \newline
@@ -139,7 +141,7 @@ A Bene\v{s} network consists of $(2\lceil \log_2 N \rceil - 1)$ stages of $2 \ti
 \subsection{Work so far}                                 % 2 pages max
 \secinfo{Joris}{Name}
 
-Our implementation relies on the compiler infrastructure established in \cite{ali2025heir}. By providing an abstraction layer that decouples application logic from a specific cryptographic backend, their work supplies the tool chain we use to compile our sorting and shuffling algorithms.
+Our implementation relies on the compiler infrastructure established in \cite{ali2025heir}. By providing an abstraction layer that decouples application logic from a specific cryptographic back-end, their work supplies the tool chain we use to compile our sorting and shuffling algorithms.
 
 To anticipate the hardware bottlenecks we are going to face in this project we look at the benchmarking already done in \cite{bian2023heir}. This paper exposes a fundamental limitation inherent to FHE. Bit wise operations will cause memory usage to scale exponentially. Our work will rely mostly on bitwise operation. So from this we are estimating that we will hit a memory wall long before we hit a computational wall.
 

@@ -13,29 +13,39 @@ FHE is really resource-intensive, so the systematic benchmarking of sorting and 
 
 
 \subsection{Research impact}
-\secinfo{Louis Nathan}{}
+\secinfo{Abdul Moiz Akbar}{Louis Nathan}
 
-\medskip
-Our main contribution to research is empirical: measured data and a reusable
-benchmark suite for a workload class that FHE compilers have barely been
-evaluated on. Table~\ref{tab:impact-research} lists the expected impact,
-including its limitations.
- 
-\begingroup
-\small
-\renewcommand{\arraystretch}{1.3}
-\begin{longtable}{>{\raggedright\arraybackslash}p{0.95\textwidth}}
-\caption{Research impact.}\label{tab:impact-research}\\
-\toprule
-\endfirsthead
-\toprule
-\endhead
-\bottomrule
-\endfoot
-
-\end{longtable}
-
-
+The main research contribution of this project is measured data and a reusable benchmark suit for a type of workload that FHE compilers have not been evaluated on. HEIR's own examples focus almost entirely on machine learning and linear operations, and the repository contains no sorting or shuffling program \cite{Goo26}.So we show how well HEIR handles non-linear, data-oblivious programs, which existing evaluation do not cover.
+\newline
+\newline
+A second contribution is the benchmark it self. Comparing FHE tools is difficult because there are no standardised benchmarks \cite{viand2021sok}, and earlier work has for benchmark suits to make libraries and compilers comparable \cite{gouert2022sok}. By comparing HEIR's output with a hand-written TFHE-rs implementation, we quantify how much performance is lost in exchange for writing a program once and compiling it for different backends.
+\newline
+\newline
+Our results are also relevant to applications that build on encrypted
+sorting. Sorting underlies database operations such as top-$k$ queries,
+medians and ranking \cite{mazzone2024ranking}. Bugs and missing features we might encounter will be reported to the HEIR project , and our sorting examples could be contributed to Roseman Labs' confidentiality requirements. 
+\newline
+\newline
+The research impact also has limitations. Our results are tied to one pinned
+HEIR release, and since HEIR changes quickly \cite{Goo26}, absolute numbers
+may be outdated within months. However, the reproducible suite is intended to offset
+this. Furthermore, the small list sizes we can process limit how far our
+findings generalise to large datasets.
 
 
 \subsection{Other impact}
+\secinfo{Abdul Moiz Akbar}{Louis Nathan}
+
+Other than research, our work has an impact on energy use, data protection law, and long-term security. However, one of the most important negative impact is environmental. FHE has a huge energy cost, a 2025 study shows a 100,000 times higher energy use for encrypted machine learning than for the plaintext equivalent \cite{damie2025energy}. Our own experiments also consume
+substantial compute, which we limit by testing on small inputs first and
+stopping runs at a fixed time and memory budget.
+\newline
+\newline
+Our work also has legal relevance: under the GDPR, encrypted data still
+counts as personal data \cite{edpb2025pseudo}, so FHE lowers risk but does not
+remove legal obligations. Our cost figures help organisations judge whether
+FHE is a practical safeguard, and support the adoption of FHE.
+Finally, the schemes targeted by HEIR are based on the Learning With Errors
+problem, which is believed to resist quantum attacks \cite{regev2009lwe}.
+Our documented benchmark suite also lowers the entry barrier for developers
+who want to use FHE and transfers practical HEIR experience to Roseman Labs.
